@@ -88,12 +88,11 @@ async def generate_financial_insights(data: dict):
 @app.post("/api/v1/categorize")
 async def categorize_expenses(data: CategorizeRequest):
     descriptions = [txn.description for txn in data.debit_transactions + data.credit_transactions]
-
     
     prompt = (
         "Categorize the following bank transactions. Respond only with a JSON object mapping categories to total amounts. "
-        "Use categories like: Food & Dining, Transportation, Shopping, Fitness & Wellness, Entertainment, Utilities, "
-        "Subscription, Healthcare, Insurance, Investment, Withdrawal, Refund, Other.\n\n"
+        "Use categories: Food & Dining, Transportation, Shopping, Fitness & Wellness, Entertainment, Utilities, "
+        "Subscription, Healthcare, Insurance, Investment, Withdrawal, Refund and Other.\n\n"
         "Transactions:\n" +
         "\n".join([f"- {txn.description}: ${txn.amount}" for txn in data.debit_transactions + data.credit_transactions])
     )
