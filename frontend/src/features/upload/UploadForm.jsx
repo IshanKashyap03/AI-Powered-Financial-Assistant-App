@@ -8,11 +8,11 @@ const UploadForm = () => {
     const [withdrawals, setWithdrawals] = useState(0);
     const [savings, setSavings] = useState(0);
     const [advice, setAdvice] = useState('');
-    const [debitTransactions, setDebitTransactions] = useState([]);
-    const [creditTransactions, setCreditTransactions] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [categorized, setCategorized] = useState('');
 
     const fetchGPTAdvice = async (income, withdrawals, savings) => {
+      setLoading(true);
       const res = await fetch('/api/v1/insights', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -20,9 +20,11 @@ const UploadForm = () => {
       });
       const data = await res.json();
       setAdvice(data.advice);
+      setLoading(false);
     }
 
     const categorizeTransactions = async (debit_transactions, credit_transactions) => {
+      setLoading(true);
       const res = await fetch('/api/v1/categorize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -34,6 +36,7 @@ const UploadForm = () => {
       const data = await res.json();
       console.log(data);
       setCategorized(data.categorized_transactions);
+      setLoading(false);
     }
 
     const debitFile = useRef();
@@ -54,8 +57,6 @@ const UploadForm = () => {
             setIncome(data.total_income);
             setWithdrawals(data.total_withdrawals);
             setSavings(data.net_savings);
-            setDebitTransactions(data.debit_transactions);
-            setCreditTransactions(data.credit_transactions);
             await fetchGPTAdvice(data.total_income, data.total_withdrawals, data.net_savings);
             await categorizeTransactions(data.debit_transactions, data.credit_transactions);
         } catch (error) {
@@ -64,6 +65,7 @@ const UploadForm = () => {
     }
 
     return (
+      <>
       <div className='top-content'>
         <div>
               {advice && (
@@ -73,32 +75,37 @@ const UploadForm = () => {
                 </div>
               )}
         </div>
-        <div className="upload-form">
-          <h2>Upload Your Bank Statements</h2>
-          <div className="statement-container">
-            <div className="statement-box">
-              <label htmlFor="debit">Debit Card Statement</label>
-              <input id="debit" type="file" ref={debitFile} accept=".pdf" />
+        <div className='middle-content'>
+          <div className="upload-form">
+            <h2>Upload Your Bank Statements</h2>
+            <div className="statement-container">
+              <div className="statement-box">
+                <label htmlFor="debit">Debit Card Statement</label>
+                <input id="debit" type="file" ref={debitFile} accept=".pdf" />
+              </div>
+              <div className="statement-box">
+                <label htmlFor="credit">Credit Card Statement</label>
+                <input id="credit" type="file" ref={creditFile} accept=".pdf" />
+              </div>
             </div>
-            <div className="statement-box">
-              <label htmlFor="credit">Credit Card Statement</label>
-              <input id="credit" type="file" ref={creditFile} accept=".pdf" />
-            </div>
-          </div>
-          <Button onClick={handleUpload} className="analyze-btn">
-            Analyze
-          </Button>
+            <Button onClick={handleUpload} className="analyze-btn">
+              Analyze
+            </Button>
 
-            {income !== null && income !== undefined &&
-              withdrawals !== null && withdrawals !== undefined &&
-              savings !== null && savings !== undefined && (
-                <div className="summary">
-                  <h3>Monthly Summary</h3>
-                  <p><strong>Total Income:</strong> ${income.toFixed(2)}</p>
-                  <p><strong>Total Spending:</strong> ${withdrawals.toFixed(2)}</p>
-                  <p><strong>Net Savings:</strong> ${savings.toFixed(2)}</p>
-                </div>
-            )}
+              {income !== null && income !== undefined &&
+                withdrawals !== null && withdrawals !== undefined &&
+                savings !== null && savings !== undefined && (
+                  <div className="summary">
+                    <h3>Monthly Summary</h3>
+                    <p><strong>Total Income:</strong> ${income.toFixed(2)}</p>
+                    <p><strong>Total Spending:</strong> ${withdrawals.toFixed(2)}</p>
+                    <p><strong>Net Savings:</strong> ${savings.toFixed(2)}</p>
+                  </div>
+              )}
+          </div>
+          <div>
+            {loading && <p>Please wait for AI Response...</p>}
+          </div>
         </div>
         <div>
             {categorized && (
@@ -111,6 +118,7 @@ const UploadForm = () => {
             )}
         </div>
       </div>
+      </>
       );
 }
 

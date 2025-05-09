@@ -136,3 +136,9 @@
     justify-content: center;
     gap: 40px;
   }
+
+  .middle-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
