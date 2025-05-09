@@ -1,6 +1,5 @@
 .upload-form {
     max-width: 600px;
-    margin: 50px auto;
     padding: 24px;
     border: 1px solid #ccc;
     border-radius: 16px;
@@ -8,6 +7,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
     font-family: 'Segoe UI', sans-serif;
+    align-self: flex-start;
   }
   
   .upload-form h2 {
@@ -89,13 +89,35 @@
   }
 
   .box-1{
-    width: 500px;
+    max-width: 600px;
     border-left: 4px solid #007BFF;
+    background-color: #f3f7ff;
+    padding: 20px;
+    line-height: 1.6;
+    font-size: 15px;
+    text-align: start;
+    border-radius: 8px;
+  }
+
+  .box-1 h3{
+    font-size: 25px;
+    color: #003e80;
   }
 
   .box-2{
-    width: 300px;
+    width: 500px;
     border-left: 4px solid green;
+    background-color: #f3f7ff;
+    padding: 20px;
+    line-height: 1.6;
+    font-size: 15px;
+    text-align: start;
+    border-radius: 8px;
+  }
+
+  .box-2 h3{
+    font-size: 25px;
+    color: #003e80;
   }
   
   .advice-box h4 {
@@ -109,7 +131,8 @@
     margin-top: 0.25rem;
   }
 
-  .advice-container{
+  .top-content{
     display: flex;
-    gap: 20px;
+    justify-content: center;
+    gap: 40px;
   }

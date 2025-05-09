@@ -64,6 +64,15 @@ const UploadForm = () => {
     }
 
     return (
+      <div className='top-content'>
+        <div>
+              {advice && (
+                <div className="box-1">
+                  <h3>AI Financial Advice</h3>
+                  <div dangerouslySetInnerHTML={{ __html: advice }} />
+                </div>
+              )}
+        </div>
         <div className="upload-form">
           <h2>Upload Your Bank Statements</h2>
           <div className="statement-container">
@@ -90,24 +99,18 @@ const UploadForm = () => {
                   <p><strong>Net Savings:</strong> ${savings.toFixed(2)}</p>
                 </div>
             )}
-            <div className='advice-container'>
-              {advice && (
-                <div className="advice-box box-1">
-                  <h3>AI Financial Advice</h3>
-                  <div dangerouslySetInnerHTML={{ __html: advice }} />
-                </div>
-              )}
-
-              {categorized && (
-                <div className="advice-box box-2">
+        </div>
+        <div>
+            {categorized && (
+                <div className="box-2">
                   <h3>Transaction Categories</h3>
                   {Object.entries(categorized).map(([category, amount]) => (
                     <p key={category}><strong>{category}:</strong> ${amount.toFixed(2)}</p>
                   ))}
                 </div>
-              )}
-            </div>
+            )}
         </div>
+      </div>
       );
 }
 
