@@ -1,0 +1,41 @@
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# === FRONTEND (React) ===
+frontend/node_modules/
+frontend/build/
+frontend/.env
+
+# === PYTHON ENV FILE ===
+backend/.env
+
+# === SYSTEM FILES ===
+.DS_Store
+Thumbs.db
+
+# === VS CODE ===
+.vscode/
+
+# === ENVIRONMENT FILES (optional security) ===
+.env
+*.env
+
+# === Pytest / coverage ===
+htmlcov/
+.coverage
+.tox/
+.cache/
