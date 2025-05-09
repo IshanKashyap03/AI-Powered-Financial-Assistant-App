@@ -23,15 +23,24 @@ def extract_debit_totals(text):
 
 def extract_credit_totals(text):
     lines = text.splitlines()
-    total_credit_spending = 0.0
+    total_credit_purchases = 0.0
+    total_credit_payments = 0.0
 
     for i, line in enumerate(lines):
-        if "Purchases/charges +" in line:
+        if "Purchases/charges" in line:
             try:
-                next_line = lines[i + 1].strip()
+                next_line = lines[i + 2].strip()
                 amount_str = next_line.replace('$', '').replace(',', '')
-                total_credit_spending = float(amount_str)
+                total_credit_purchases += float(amount_str)
             except (IndexError, ValueError):
-                print("Failed to parse credit spending from line:", line)
+                print("Failed to parse credit purchases from line:", line)
 
-    return total_credit_spending
+        elif "Payments/credits" in line:
+            try:
+                next_line = lines[i + 2].strip()
+                amount_str = next_line.replace('$', '').replace(',', '')
+                total_credit_payments += float(amount_str)
+            except (IndexError, ValueError):
+                print("Failed to parse credit payments from line:", line)
+
+    return total_credit_purchases, total_credit_payments

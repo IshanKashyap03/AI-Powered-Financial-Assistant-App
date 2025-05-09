@@ -76,3 +76,40 @@
     font-size: 16px;
     margin: 8px 0;
   }
+
+  .advice-box {
+    background-color: #f3f7ff;
+    padding: 20px;
+    margin-top: 24px;
+    border-radius: 8px;
+    line-height: 1.6;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 15px;
+  }
+
+  .box-1{
+    width: 500px;
+    border-left: 4px solid #007BFF;
+  }
+
+  .box-2{
+    width: 300px;
+    border-left: 4px solid green;
+  }
+  
+  .advice-box h4 {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    color: #003e80;
+  }
+  
+  .advice-box ul {
+    padding-left: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .advice-container{
+    display: flex;
+    gap: 20px;
+  }
